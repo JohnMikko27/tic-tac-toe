@@ -108,8 +108,19 @@ gameController.playRound();*/
 
 const boardContainer = document.querySelector('#board-container');
 
+const player = (marker) => {
+    const getMarker = () => marker;
+    return { getMarker };
+};
+
+/*
+----------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
 const gameBoard = (() => {
-    let board = ['X', 'X', 'X', 'O', 'O', 'O', 'O', 'X', 'O'];
+    let board = ['T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T'];
+
+    let currentPlayer;
 
     const displayBoard = () => {
         for (let i = 0; i < board.length; i++) {
@@ -119,26 +130,36 @@ const gameBoard = (() => {
             cell.dataset.number = i;
             boardContainer.appendChild(cell);
         }
+    };
+
+    const updateBoard = () => {
+        boardContainer.textContent = ' ';
+        displayBoard();
+        addMarker(currentPlayer);
     }
 
-    return { displayBoard }
+    const addMarker = (player) => {
+        const cells = document.querySelectorAll('.cell');
+        currentPlayer = player;
+        cells.forEach(cell => cell.addEventListener('click', (e) => {
+            if (e.target.textContent != 'X' && e.target.textContent != 'O') {
+                board[e.target.dataset.number] = player.getMarker();
+                updateBoard();
+            }
+        }));
+        
+    }
+
+    return { displayBoard, addMarker, updateBoard };
 })();
 gameBoard.displayBoard();
+
+let jeff = player('P')
+gameBoard.addMarker(jeff);
 /*
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
-const player = marker => {
-    const getMarker = () => marker;
-    return { getMarker };
-}
+const gameController = (() => {
 
-
-
-/*
-----------------------------------------------------------------------------------------------------------------------------------------------------
-*/
-
-const gameController = () => {
-
-}
+})();

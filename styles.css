@@ -1,0 +1,11 @@
+#board-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 150px;
+    height: auto;
+}
+
+.cell {
+    border: 2px solid red;
+    text-align: center;
+}
