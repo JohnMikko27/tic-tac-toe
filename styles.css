@@ -1,9 +1,0 @@
-#board-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    
-}
-
-.cell {
-    border: 2px solid red;
-}
