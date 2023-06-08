@@ -118,7 +118,8 @@ const player = (marker) => {
 */
 
 const gameBoard = (() => {
-    let board = ['_','_','_','_','_','_','_','_','_'];
+    let board = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
+    const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [2,4,6], [0,4,8]];
 
     let currentPlayer;
 
@@ -135,6 +136,7 @@ const gameBoard = (() => {
     const updateBoard = () => {
         boardContainer.textContent = ' ';
         displayBoard();
+        // reattaches eventListeners
         gameController.playRound();
     };
 
@@ -143,9 +145,29 @@ const gameBoard = (() => {
         updateBoard();
     };
 
-    return { displayBoard, addMarker, updateBoard };
+    const isTie = () => {
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] == "X" || board[i] == "O") continue;
+            return false;
+        }
+        return true;
+    };
+
+    const threeInARow = () => {
+        for (let i = 0; i < winningCombinations.length; i++) {
+            for (let j = 0; j < 1; j++) {
+                if (board[winningCombinations[i][j]] == "X" && board[winningCombinations[i][j+1]] == "X" && board[winningCombinations[i][j+2]] == "X") {
+                    console.log('player X has won');
+                    return "X";
+                } else if (board[winningCombinations[i][j]] == "O" && board[winningCombinations[i][j+1]] == "O" && board[winningCombinations[i][j+2]] == "O") {
+                    console.log('player O has won');
+                    return "O";
+                }
+            }
+        }
+    }
+    return { displayBoard, addMarker, updateBoard, isTie, threeInARow };
 })();
-gameBoard.displayBoard();
 
 
 /*
@@ -160,6 +182,16 @@ const gameController = (() => {
 
     const playRound = () => {
         const cells = document.querySelectorAll('.cell');
+        if (gameBoard.threeInARow() == "X") {
+            console.log('player x has won');
+            return;
+        } else if (gameBoard.threeInARow() == "O") {
+            console.log('player o has won');
+            return;
+        } else if (gameBoard.isTie()) {
+            console.log('game is a tie');
+            return;
+        }
 
         cells.forEach(cell => cell.addEventListener('click', e => {
             gameBoard.addMarker(e.target.dataset.number, activePlayer);
@@ -171,4 +203,5 @@ const gameController = (() => {
     return { playRound };
 })();
 
+gameBoard.displayBoard();
 gameController.playRound();
