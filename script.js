@@ -118,7 +118,7 @@ const player = (marker) => {
 */
 
 const gameBoard = (() => {
-    let board = ['T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T'];
+    let board = ['_','_','_','_','_','_','_','_','_'];
 
     let currentPlayer;
 
@@ -135,31 +135,40 @@ const gameBoard = (() => {
     const updateBoard = () => {
         boardContainer.textContent = ' ';
         displayBoard();
-        addMarker(currentPlayer);
-    }
+        gameController.playRound();
+    };
 
-    const addMarker = (player) => {
-        const cells = document.querySelectorAll('.cell');
-        currentPlayer = player;
-        cells.forEach(cell => cell.addEventListener('click', (e) => {
-            if (e.target.textContent != 'X' && e.target.textContent != 'O') {
-                board[e.target.dataset.number] = player.getMarker();
-                updateBoard();
-            }
-        }));
-        
-    }
+    const addMarker = (index, player) => {
+        board[index] = player.getMarker();
+        updateBoard();
+    };
 
     return { displayBoard, addMarker, updateBoard };
 })();
 gameBoard.displayBoard();
 
-let jeff = player('P')
-gameBoard.addMarker(jeff);
+
 /*
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
 const gameController = (() => {
+    let playerX = player("X");
+    let playerO = player("O");
 
+    let activePlayer = playerX;
+
+    const playRound = () => {
+        const cells = document.querySelectorAll('.cell');
+
+        cells.forEach(cell => cell.addEventListener('click', e => {
+            gameBoard.addMarker(e.target.dataset.number, activePlayer);
+            activePlayer = activePlayer == playerX ? playerO : playerX;
+        }))
+        
+    };
+
+    return { playRound };
 })();
+
+gameController.playRound();
