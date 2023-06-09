@@ -9,7 +9,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="name-container"></div>
     <div id="board-container"></div>
-    
+    <form action="./script.js" method="post" id="form">
+        <div>
+            <label for="playerXName">Player X Name:</label>
+            <input type="text" id="playerXName">
+        </div>
+        <div><label for="playerOName">Player O Name:</label>
+            <input type="text" id="playerOName">
+        </div>
+        <button id="submit">Submit</button>
+    </form>
+    <button id="restart">Restart</button>
 </body>
 </html>

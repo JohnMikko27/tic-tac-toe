@@ -106,12 +106,42 @@ const gameController = (() => {
 gameBoard.displayBoard();
 gameController.playRound();*/
 
+const body = document.querySelector('body');
+const nameContainer = document.querySelector('#name-container');
 const boardContainer = document.querySelector('#board-container');
+const form = document.querySelector('form');
+const playerX = document.querySelector('#playerXName');
+const playerO = document.querySelector('#playerOName');
+const restartButton = document.querySelector('#restart');
 
 const player = (marker) => {
     const getMarker = () => marker;
     return { getMarker };
 };
+
+
+restartButton.addEventListener('click', () => {
+    gameBoard.clearBoard();
+    gameController.resetActivePlayer();
+})
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let playerXName = playerX.value;
+    let playerOName = playerO.value;
+
+    let div1 = document.createElement('div');
+    let div2 = document.createElement('div');
+
+    div1.textContent = `${playerXName} is player X!`;
+    div2.textContent = `${playerOName} is player O!`;
+
+    nameContainer.appendChild(div1);
+    nameContainer.appendChild(div2);
+    body.appendChild(nameContainer);
+    form.reset();
+});
 
 /*
 ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -120,8 +150,6 @@ const player = (marker) => {
 const gameBoard = (() => {
     let board = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
     const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [2,4,6], [0,4,8]];
-
-    let currentPlayer;
 
     const displayBoard = () => {
         for (let i = 0; i < board.length; i++) {
@@ -166,7 +194,14 @@ const gameBoard = (() => {
             }
         }
     }
-    return { displayBoard, addMarker, updateBoard, isTie, threeInARow };
+
+    const clearBoard = () => {
+        for (let i = 0; i < board.length; i++) {
+            board[i] = '_';
+        }
+        updateBoard();
+    }
+    return { displayBoard, addMarker, updateBoard, isTie, threeInARow, clearBoard };
 })();
 
 
@@ -198,11 +233,15 @@ const gameController = (() => {
                 gameBoard.addMarker(e.target.dataset.number, activePlayer);
                 activePlayer = activePlayer == playerX ? playerO : playerX;
             }
-        }))
+        }));
         
     };
 
-    return { playRound };
+    const resetActivePlayer = () => {
+        activePlayer = playerX;
+    }
+
+    return { playRound, resetActivePlayer};
 })();
 
 gameBoard.displayBoard();
