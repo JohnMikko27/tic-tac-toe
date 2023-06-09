@@ -194,8 +194,10 @@ const gameController = (() => {
         }
 
         cells.forEach(cell => cell.addEventListener('click', e => {
-            gameBoard.addMarker(e.target.dataset.number, activePlayer);
-            activePlayer = activePlayer == playerX ? playerO : playerX;
+            if (e.target.textContent != "X" && e.target.textContent != "O") {
+                gameBoard.addMarker(e.target.dataset.number, activePlayer);
+                activePlayer = activePlayer == playerX ? playerO : playerX;
+            }
         }))
         
     };
