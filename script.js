@@ -107,6 +107,7 @@ gameBoard.displayBoard();
 gameController.playRound();*/
 
 const body = document.querySelector('body');
+const winnerDisplay = document.querySelector('#winner-display');
 const nameContainer = document.querySelector('#name-container');
 const boardContainer = document.querySelector('#board-container');
 const form = document.querySelector('form');
@@ -119,7 +120,21 @@ const player = (marker) => {
     return { getMarker };
 };
 
+const interfaceController = (() => {
+    const displayWinner = (winner) => {
+        let message = document.createElement('div');
+        if (winner == "Tie") {
+            winnerDisplay.textContent = "It's a tie game!";
+        } else {
+            winnerDisplay.textContent = `Player ${winner} is the winner`;
+        }
+    };
+
+    return { displayWinner };
+})();
+
 restartButton.addEventListener('click', () => {
+    winnerDisplay.textContent = ' ';
     gameBoard.clearBoard();
     gameController.resetActivePlayer();
 })
@@ -226,17 +241,21 @@ const gameController = (() => {
     let activePlayer = playerX;
 
     const playRound = () => {
-        const cells = document.querySelectorAll('.cell');
         if (gameBoard.getWinner() == "X") {
             console.log('player x has won');
+            interfaceController.displayWinner("X");
             return;
         } else if (gameBoard.getWinner() == "O") {
             console.log('player o has won');
+            interfaceController.displayWinner("O");
             return;
         } else if (gameBoard.isTie()) {
             console.log('game is a tie');
+            interfaceController.displayWinner("Tie");
             return;
         }
+
+        const cells = document.querySelectorAll('.cell');
 
         cells.forEach(cell => cell.addEventListener('click', e => {
             if (e.target.textContent != "X" && e.target.textContent != "O") {
@@ -244,7 +263,6 @@ const gameController = (() => {
                 activePlayer = activePlayer == playerX ? playerO : playerX;
             }
         }));
-        
     };
 
     const resetActivePlayer = () => {
