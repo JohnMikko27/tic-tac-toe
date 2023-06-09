@@ -119,7 +119,6 @@ const player = (marker) => {
     return { getMarker };
 };
 
-
 restartButton.addEventListener('click', () => {
     gameBoard.clearBoard();
     gameController.resetActivePlayer();
@@ -149,6 +148,7 @@ form.addEventListener('submit', (e) => {
 
 const gameBoard = (() => {
     let board = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
+    let winner;
     const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [2,4,6], [0,4,8]];
 
     const displayBoard = () => {
@@ -186,10 +186,10 @@ const gameBoard = (() => {
             for (let j = 0; j < 1; j++) {
                 if (board[winningCombinations[i][j]] == "X" && board[winningCombinations[i][j+1]] == "X" && board[winningCombinations[i][j+2]] == "X") {
                     console.log('player X has won');
-                    return "X";
+                    winner = "X";
                 } else if (board[winningCombinations[i][j]] == "O" && board[winningCombinations[i][j+1]] == "O" && board[winningCombinations[i][j+2]] == "O") {
                     console.log('player O has won');
-                    return "O";
+                    winner = "O";
                 }
             }
         }
@@ -199,9 +199,19 @@ const gameBoard = (() => {
         for (let i = 0; i < board.length; i++) {
             board[i] = '_';
         }
+        resetWinner();
         updateBoard();
     }
-    return { displayBoard, addMarker, updateBoard, isTie, threeInARow, clearBoard };
+
+    const getWinner = () => {
+        threeInARow();
+        return winner;
+    }
+
+    //fixes bug where winner stayed as "X" or "O" which would make the playRound function return before reattaching eventListeners again 
+    const resetWinner = () => winner = '';
+
+    return { displayBoard, addMarker, updateBoard, isTie, getWinner, clearBoard };
 })();
 
 
@@ -217,10 +227,10 @@ const gameController = (() => {
 
     const playRound = () => {
         const cells = document.querySelectorAll('.cell');
-        if (gameBoard.threeInARow() == "X") {
+        if (gameBoard.getWinner() == "X") {
             console.log('player x has won');
             return;
-        } else if (gameBoard.threeInARow() == "O") {
+        } else if (gameBoard.getWinner() == "O") {
             console.log('player o has won');
             return;
         } else if (gameBoard.isTie()) {
