@@ -9,6 +9,7 @@
 }
 
 body {
+  position: relative;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -24,8 +25,20 @@ nav {
 }
 
 /*
-<------------------------------------------ board container ----------------------------------------------------->
+<------------------------------------------ #main ----------------------------------------------------->
 */
+
+#main {
+}
+
+#winner-display {
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  min-height: 5rem;
+}
 
 #container {
   display: flex;
@@ -41,7 +54,6 @@ nav {
 }
 
 .cell {
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,6 +64,7 @@ nav {
 
 .cell:hover {
   background-color: rgb(173, 199, 230);
+  cursor: pointer;
 }
 
 [data-number="0"],
