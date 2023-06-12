@@ -9,19 +9,26 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="winner-display"></div>
-    <div id="name-container"></div>
-    <div id="board-container"></div>
-    <form action="./script.js" method="post" id="form">
+    <nav>Tic Tac Toe</nav>
+    <div id="main">
         <div>
-            <label for="playerXName">Player X Name:</label>
-            <input type="text" id="playerXName">
+            <div id="name-container"></div>
+            <div id="winner-display"></div>
+            <div id="container">
+                <div id="board-container"></div>
+            </div>
         </div>
-        <div><label for="playerOName">Player O Name:</label>
-            <input type="text" id="playerOName">
-        </div>
-        <button id="submit">Submit</button>
-    </form>
-    <button id="restart">Restart</button>
+        <form action="./script.js" method="post" id="form">
+            <div>
+                <label for="playerXName">Player X Name:</label>
+                <input type="text" id="playerXName">
+            </div>
+            <div><label for="playerOName">Player O Name:</label>
+                <input type="text" id="playerOName">
+            </div>
+            <button id="submit">Submit</button>
+        </form>
+        <button id="restart">Restart</button>
+    </div>
 </body>
 </html>

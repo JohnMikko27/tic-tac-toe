@@ -1,11 +1,84 @@
+:root {
+  --board-inner-border: 2px solid rgb(86, 86, 86);
+  --board-outer-border: 5px solid black;
+}
+
+* {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+nav {
+  font-size: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightblue;
+  height: 18vh;
+}
+
+/*
+<------------------------------------------ board container ----------------------------------------------------->
+*/
+
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
 #board-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 150px;
-    height: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: var(--board-outer-border);
 }
 
 .cell {
-    border: 2px solid red;
-    text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  width: 156.33px;
+  height: 156.33px;
 }
+
+.cell:hover {
+  background-color: rgb(173, 199, 230);
+}
+
+[data-number="0"],
+[data-number="3"],
+[data-number="6"] {
+  border-right: var(--board-inner-border);
+}
+
+[data-number="2"],
+[data-number="5"],
+[data-number="8"] {
+  border-left: var(--board-inner-border);
+}
+
+[data-number="3"],
+[data-number="4"],
+[data-number="5"] {
+  border-top: var(--board-inner-border);
+}
+
+[data-number="6"],
+[data-number="7"],
+[data-number="8"] {
+  border-top: var(--board-inner-border);
+}
+
+/*
+<------------------------------------------ board container ----------------------------------------------------->
+*/
+
