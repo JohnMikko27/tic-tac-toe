@@ -2,6 +2,7 @@ const body = document.querySelector('body');
 const winnerDisplay = document.querySelector('#winner-display');
 const nameContainer = document.querySelector('#name-container');
 const boardContainer = document.querySelector('#board-container');
+const formContainer = document.querySelector('#form-container');
 const form = document.querySelector('form');
 const playerX = document.querySelector('#playerXName');
 const playerO = document.querySelector('#playerOName');
@@ -17,16 +18,14 @@ const interfaceController = (() => {
         if (winner == "Tie") {
             winnerDisplay.textContent = "It's a tie game!";
         } else {
-            winnerDisplay.textContent = `Player ${winner} is the winner`;
+            winnerDisplay.textContent = `Player ${winner} is the winner!`;
         }
-       
     };
-
     return { displayWinner };
 })();
 
 restartButton.addEventListener('click', () => {
-    winnerDisplay.textContent = ' ';
+    winnerDisplay.textContent = 'Player X Turn';
     gameBoard.clearBoard();
     gameController.resetActivePlayer();
 })
@@ -37,7 +36,11 @@ form.addEventListener('submit', (e) => {
     let playerXName = playerX.value;
     let playerOName = playerO.value;
 
-    let div1 = document.createElement('div');
+
+    //put the eventhandlers in interfacecontroller object
+    //change this so that the appropriate name is added when someone wins or loses
+
+    /*let div1 = document.createElement('div');
     let div2 = document.createElement('div');
 
     div1.textContent = `${playerXName} is player X!`;
@@ -45,8 +48,9 @@ form.addEventListener('submit', (e) => {
 
     nameContainer.appendChild(div1);
     nameContainer.appendChild(div2);
-    body.appendChild(nameContainer);
+    body.appendChild(nameContainer);*/
     form.reset();
+    formContainer.classList.toggle('hidden');
 });
 
 /*
@@ -92,10 +96,8 @@ const gameBoard = (() => {
         for (let i = 0; i < winningCombinations.length; i++) {
             for (let j = 0; j < 1; j++) {
                 if (board[winningCombinations[i][j]] == "X" && board[winningCombinations[i][j+1]] == "X" && board[winningCombinations[i][j+2]] == "X") {
-                    console.log('player X has won');
                     winner = "X";
                 } else if (board[winningCombinations[i][j]] == "O" && board[winningCombinations[i][j+1]] == "O" && board[winningCombinations[i][j+2]] == "O") {
-                    console.log('player O has won');
                     winner = "O";
                 }
             }
@@ -118,7 +120,12 @@ const gameBoard = (() => {
     //fixes bug where winner stayed as "X" or "O" which would make the playRound function return before reattaching eventListeners again 
     const resetWinner = () => winner = '';
 
-    return { displayBoard, addMarker, updateBoard, isTie, getWinner, clearBoard };
+    const isThereWinner = () => {
+        if (winner) return true;
+        return false;
+    }
+
+    return { displayBoard, addMarker, updateBoard, isTie, getWinner, clearBoard, isThereWinner };
 })();
 
 
@@ -131,8 +138,9 @@ const gameController = (() => {
     let playerO = player("O");
 
     let activePlayer = playerX;
-
+    
     const playRound = () => {
+        winnerDisplay.textContent = 'Player X Turn!'
         if (gameBoard.getWinner() == "X") {
             interfaceController.displayWinner("X");
             return;
@@ -143,13 +151,15 @@ const gameController = (() => {
             interfaceController.displayWinner("Tie");
             return;
         }
-
+        
         const cells = document.querySelectorAll('.cell');
 
         cells.forEach(cell => cell.addEventListener('click', e => {
             if (e.target.textContent != "X" && e.target.textContent != "O") {
                 gameBoard.addMarker(e.target.dataset.number, activePlayer);
                 activePlayer = activePlayer == playerX ? playerO : playerX;
+                if (gameBoard.isThereWinner()) return;
+                winnerDisplay.textContent = `Player ${activePlayer.getMarker()} Turn!`
             }
         }));
     };

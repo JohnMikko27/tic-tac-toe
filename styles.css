@@ -1,6 +1,7 @@
 :root {
   --board-inner-border: 2px solid rgb(86, 86, 86);
-  --board-outer-border: 5px solid black;
+  --board-outer-border: 4px solid black;
+  --hover-color: rgb(196, 219, 248);
 }
 
 * {
@@ -13,30 +14,41 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  background-color: rgb(179, 179, 179);
 }
 
 nav {
-  font-size: 3.5rem;
+  font-size: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: lightblue;
   height: 18vh;
+  border-bottom: 2px solid black;
 }
 
 /*
-<------------------------------------------ #main ----------------------------------------------------->
+------------------------------------------ board-container -----------------------------------------------------
 */
 
 #main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#name-container {
+
 }
 
 #winner-display {
+  margin-top: 1rem;
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2.5rem;
   min-height: 5rem;
 }
 
@@ -54,16 +66,17 @@ nav {
 }
 
 .cell {
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  width: 156.33px;
-  height: 156.33px;
+  width: 130px;
+  height: 130px;
 }
 
 .cell:hover {
-  background-color: rgb(173, 199, 230);
+  background-color: var(--hover-color);
   cursor: pointer;
 }
 
@@ -91,7 +104,73 @@ nav {
   border-top: var(--board-inner-border);
 }
 
+#title {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 30%;
+  font-size: 3rem;
+  margin-bottom: 1.15rem;
+}
+
+#form-container {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+form {
+  gap: 1rem;
+  position: relative;
+  top: 30%;
+  display: grid;
+  justify-items: center;
+  font-size: 2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+form div {
+  display: flex;
+  align-items: center;
+}
+
+#submit {
+  width: 4rem;
+  height: 2rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+#submit:hover {
+  cursor: pointer;
+  background-color: rgb(219, 219, 219);
+}
+
+input {
+  border-radius: 4px;
+  height: 3rem;
+}
+
 /*
-<------------------------------------------ board container ----------------------------------------------------->
+------------------------------------------ board container -----------------------------------------------------
 */
 
+#restart {
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  background-color: white;
+  border-radius: 6px;
+}
+
+#restart:hover {
+  cursor: pointer;
+  background-color: var(--hover-color);
+}

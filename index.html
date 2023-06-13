@@ -18,16 +18,19 @@
                 <div id="board-container"></div>
             </div>
         </div>
-        <form action="./script.js" method="post" id="form">
-            <div>
-                <label for="playerXName">Player X Name:</label>
-                <input type="text" id="playerXName">
-            </div>
-            <div><label for="playerOName">Player O Name:</label>
-                <input type="text" id="playerOName">
-            </div>
-            <button id="submit">Submit</button>
-        </form>
+        <div id="form-container">
+            <div id="title">Choose your names!</div>
+            <form action="./script.js" method="post" id="form">
+                <div>
+                    <label for="playerXName">Player X Name:</label>
+                    <input type="text" id="playerXName">
+                </div>
+                <div><label for="playerOName">Player O Name:</label>
+                    <input type="text" id="playerOName">
+                </div>
+                <button id="submit">Submit</button>
+            </form>
+        </div>
         <button id="restart">Restart</button>
     </div>
     
