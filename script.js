@@ -2,10 +2,6 @@ const body = document.querySelector('body');
 const winnerDisplay = document.querySelector('#winner-display');
 const nameContainer = document.querySelector('#name-container');
 const boardContainer = document.querySelector('#board-container');
-const formContainer = document.querySelector('#form-container');
-const form = document.querySelector('form');
-const playerX = document.querySelector('#playerXName');
-const playerO = document.querySelector('#playerOName');
 const restartButton = document.querySelector('#restart');
 
 const player = (marker) => {
@@ -29,29 +25,6 @@ restartButton.addEventListener('click', () => {
     gameBoard.clearBoard();
     gameController.resetActivePlayer();
 })
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    let playerXName = playerX.value;
-    let playerOName = playerO.value;
-
-
-    //put the eventhandlers in interfacecontroller object
-    //change this so that the appropriate name is added when someone wins or loses
-
-    /*let div1 = document.createElement('div');
-    let div2 = document.createElement('div');
-
-    div1.textContent = `${playerXName} is player X!`;
-    div2.textContent = `${playerOName} is player O!`;
-
-    nameContainer.appendChild(div1);
-    nameContainer.appendChild(div2);
-    body.appendChild(nameContainer);*/
-    form.reset();
-    formContainer.classList.toggle('hidden');
-});
 
 /*
 ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -128,7 +101,6 @@ const gameBoard = (() => {
     return { displayBoard, addMarker, updateBoard, isTie, getWinner, clearBoard, isThereWinner };
 })();
 
-
 /*
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 */
@@ -158,7 +130,11 @@ const gameController = (() => {
             if (e.target.textContent != "X" && e.target.textContent != "O") {
                 gameBoard.addMarker(e.target.dataset.number, activePlayer);
                 activePlayer = activePlayer == playerX ? playerO : playerX;
+
+                // To not show the player turn message when game is over
                 if (gameBoard.isThereWinner()) return;
+                else if (gameBoard.isTie()) return;
+
                 winnerDisplay.textContent = `Player ${activePlayer.getMarker()} Turn!`
             }
         }));
@@ -168,8 +144,22 @@ const gameController = (() => {
         activePlayer = playerX;
     }
 
-    return { playRound, resetActivePlayer};
+    const game = () => {
+        gameBoard.displayBoard();
+        playRound();
+    }
+
+    return { playRound, resetActivePlayer, game};
 })();
 
-gameBoard.displayBoard();
-gameController.playRound();
+gameController.game();
+
+const computer = (() => {
+    // use minimax algorithm to create an unbeatable AI
+    /*
+        * use recursion until the code reaches an end/terminal state where someone wins or loses (cpu = +10, playerwin = -10, tie = 0)
+        *  need an array of available spots to loop over and check possible moves to pick
+        * It only keeps recursing until someone wins or game is tied
+        * make sure to recurse through the newly updated board
+    */
+})();

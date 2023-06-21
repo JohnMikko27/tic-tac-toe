@@ -5,11 +5,12 @@
 }
 
 * {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-family: 'Varela Round', sans-serif;
   box-sizing: border-box;
 }
 
 body {
+  box-sizing: border-box;
   position: relative;
   margin: 0;
   padding: 0;
@@ -18,7 +19,7 @@ body {
 }
 
 nav {
-  font-size: 5rem;
+  font-size: 5.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,10 +28,6 @@ nav {
   border-bottom: 2px solid black;
 }
 
-/*
------------------------------------------- board-container -----------------------------------------------------
-*/
-
 #main {
   display: flex;
   flex-direction: column;
@@ -38,19 +35,20 @@ nav {
   align-items: center;
 }
 
-#name-container {
-
-}
-
 #winner-display {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: .5rem;
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 3.25rem;
   min-height: 5rem;
 }
+
+/*
+------------------------------------------ board-container -----------------------------------------------------
+*/
 
 #container {
   display: flex;
@@ -70,7 +68,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 3rem;
   width: 130px;
   height: 130px;
 }
@@ -102,43 +100,6 @@ nav {
 [data-number="7"],
 [data-number="8"] {
   border-top: var(--board-inner-border);
-}
-
-#title {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  top: 30%;
-  font-size: 3rem;
-  margin-bottom: 1.15rem;
-}
-
-#form-container {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-}
-
-form {
-  gap: 1rem;
-  position: relative;
-  top: 30%;
-  display: grid;
-  justify-items: center;
-  font-size: 2rem;
-}
-
-.hidden {
-  display: none;
-}
-
-form div {
-  display: flex;
-  align-items: center;
 }
 
 #submit {
