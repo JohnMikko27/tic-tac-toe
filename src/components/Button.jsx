@@ -1,7 +1,7 @@
 import "../styles/Button.css";
-const Button = ({value}) => {
+const Button = ({value, id, handleClick}) => {
   return (
-    <button className="button">{value}</button>
+    <button onClick={handleClick} id={id} className="button">{value}</button>
   );
 };
 
