@@ -13,32 +13,31 @@ function App() {
     {value: "", id: 7}, {value: "", id: 8}, 
   ]);
 
-  const [index, setIndex] = useState(0);
-
   function handleClick(e) {
     if (e.target.value === "") {
       let arr = [...buttonValues];
-      arr[e.target.id].value="ok";
+      arr[e.target.id].value = "x";
       setButtonValues(arr);
+      computerMove();
     }
   }
 
-  // function computerMove() {
-  //   let counter = 0;
-  //   for (let i = 0; i < coordsPlaced.length; i++) {
-  //     if (coordsPlaced[i] === "-") counter++;
-  //   }
-  //   if (counter === 1) return;
-  //   let move;
-  //   // eslint-disable-next-line no-constant-condition
-  //   while (true) {
-  //     move = Math.floor(Math.random() * 9);
-  //     if (coordsPlaced[move] === "-") break;
-  //   }
-  //   document.querySelector(`button[data-number="${move}"]`).textContent = "o";
-  //   coordsPlaced[move] = "o";
-  //   switchActivePlayer();
-  // }
+  function computerMove() {
+    let counter = 0;
+    for (let i = 0; i < buttonValues.length; i++) {
+      if (buttonValues[i].value === "") counter++;
+    }
+    if (counter === 0) return;
+    let move;
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      move = Math.floor(Math.random() * 9);
+      if (buttonValues[move].value === "") break;
+    }
+    let arr = [...buttonValues];
+    arr[move].value = "o";
+    setButtonValues(arr);
+  }
 
   // function switchActivePlayer() {
   //   activePlayer === "player" ? activePlayer = "cpu" : activePlayer = "player";
@@ -48,10 +47,6 @@ function App() {
   //   const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [2,4,6], [0,4,8]];
   //   winningCombinations.forEach((combination));
   // }
-
-
-  console.log("rendering buttonValues");
-  console.log(buttonValues);
 
   return (
     <div>
