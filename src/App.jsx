@@ -15,13 +15,11 @@ function App() {
 
   function handleClick(e) {
     if (buttonValues[e.target.id].value !== "") return;
-    if (e.target.value === "") {
-      let arr = [...buttonValues];
-      arr[e.target.id].value = "X";
-      setButtonValues(arr);
-      computerMove();
-      checkWinner();
-    }
+    let arr = [...buttonValues];
+    arr[e.target.id].value = "X";
+    setButtonValues(arr);
+    computerMove();
+    checkWinner();
   }
 
   function computerMove() {
@@ -65,12 +63,28 @@ function App() {
   }
 
   function checkWinner() {
-    if (isTie()) console.log("draw");
-    else if (threeInARow() === "X") console.log("player x won");
-    else if (threeInARow() === "O") console.log("player o won");
-    
+    if (isTie()) {
+      console.log("draw");
+      disableButtons();
+    }
+    else if (threeInARow() === "X") {
+      console.log("player x won");
+      disableButtons();
+    }
+    else if (threeInARow() === "O") {
+      console.log("player o won");
+      disableButtons();
+    }
+    else console.log("no winner");
   }
 
+  function disableButtons() {
+    const buttons = document.querySelectorAll(".button");
+    buttons.forEach((button) => button.disabled = true);
+  }
+
+  //   create a game over function that displays the winner and disabled the button
+  // add display 
   return (
     <div>
       <Score players={players}/>
