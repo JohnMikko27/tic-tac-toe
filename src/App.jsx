@@ -14,11 +14,13 @@ function App() {
   ]);
 
   function handleClick(e) {
+    if (buttonValues[e.target.id].value !== "") return;
     if (e.target.value === "") {
       let arr = [...buttonValues];
-      arr[e.target.id].value = "x";
+      arr[e.target.id].value = "X";
       setButtonValues(arr);
       computerMove();
+      checkWinner();
     }
   }
 
@@ -35,18 +37,39 @@ function App() {
       if (buttonValues[move].value === "") break;
     }
     let arr = [...buttonValues];
-    arr[move].value = "o";
+    arr[move].value = "O";
     setButtonValues(arr);
   }
 
-  // function switchActivePlayer() {
-  //   activePlayer === "player" ? activePlayer = "cpu" : activePlayer = "player";
-  // }
+  function threeInARow() {
+    const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [2,4,6], [0,4,8]];
+    for (let i = 0; i < winningCombinations.length; i++) {
+      for (let j = 0; j < 1; j++) {
+        if (buttonValues[winningCombinations[i][j]].value === "X" && buttonValues[winningCombinations[i][j+1]].value === "X" && buttonValues[winningCombinations[i][j+2]].value === "X") {
+          return "X";
+        } else if (buttonValues[winningCombinations[i][j]].value === "O" && buttonValues[winningCombinations[i][j+1]].value === "O" && buttonValues[winningCombinations[i][j+2]].value === "O") {
+          console.log("player O has won");
+          return "O";
+        }
+      }
+    }
+  }
 
-  // function checkWinner() {
-  //   const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [2,4,6], [0,4,8]];
-  //   winningCombinations.forEach((combination));
-  // }
+  function isTie() {
+    for (let i = 0; i < buttonValues.length; i++) {
+      if (buttonValues[i].value === "X" || buttonValues[i].value === "O") continue;
+      return false;
+    }
+    console.log("it is a tie");
+    return true;
+  }
+
+  function checkWinner() {
+    if (isTie()) console.log("draw");
+    else if (threeInARow() === "X") console.log("player x won");
+    else if (threeInARow() === "O") console.log("player o won");
+    
+  }
 
   return (
     <div>
